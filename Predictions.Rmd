@@ -1,0 +1,74 @@
+---
+title: "Predictions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+```{r}
+# Loading in the tidyverse library and the Among Us Game Data
+library(tidyverse)
+
+amongus <- readr::read_csv("User1.csv")
+
+amongus %>% glimpse()
+```
+```{r}
+# Retrieving important values from the data that will help us analyze and make predictions
+# Determining the total number of games and the number of wins and losses
+
+total <- amongus %>% count()
+total[[1]]
+
+Outcome <- amongus %>% group_by(Outcome)
+mogus_tibble <- tibble(Outcome)
+mogus_tibble %>% group_by(Outcome) %>% summarize(count=n())
+```
+
+```{r}
+# Further visualizing the predictions
+# Using the sample function to select random samples from the data and find similar probabilities for winning a game of Among Us based on the data
+
+mogus_tibble %>%
+  sample_n(size = total[[1]], replace = TRUE) %>%
+  group_by(Outcome) %>%
+  filter(Outcome == "Win") %>%
+  summarize(n(), p_win = n()/total[[1]])
+```
+```{r}
+# Estimating the sampling distribution of probability to win the next game of Among Us based on the data (wins/losses of previous games)
+# The sampling distribution is the distribution of all values that the probability of winning a game could be for random samples from the data
+# To estimate the sampling distribution, I took 1000 values from the probabilty of winning and calculated 1000 randoms samples from the population (main data)
+
+sample_pwin <- rep(NA, 1000)
+
+for(i in 1:1000){
+  sample_100 <- mogus_tibble %>% sample_n(size=total[[1]], replace = TRUE)
+  sample_pwin[i] <-
+    sample_100 %>%
+    filter(Outcome == "Win") %>%
+    summarise(n()/total[[1]]) %>%
+    as.numeric()
+}
+
+sample_pwin <- tibble(p_win = (sample_pwin)) %>% glimpse()
+```
+```{r}
+# This is a histogram displaying the sampling distribution of the probability of winning a game of Among Us
+# The graph is normal distribution 
+# Also calculated the confidence interval of the sampling distribution, where we can estimate with a 95% confidence what the probability of winning the next game of Among Us
+
+ggplot(sample_pwin, aes(x = p_win)) + geom_histogram()
+
+quantile_tibble <- quantile(sample_pwin$p_win, c(0.025, 0.975))
+quantile_tibble
+```
