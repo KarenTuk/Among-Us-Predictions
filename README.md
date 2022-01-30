@@ -16,6 +16,6 @@ This is a histogram displaying the sampling distribution of the probability of w
 
 ![Histogram](./images/3.png)
 
-Also calculated the confidence interval of the sampling distribution, where I can estimate with a 95% confidence what the probability of winning the next game of Among Us.
+Also calculated the confidence interval of the sampling distribution, where I can estimate with a 95% confidence what the probability of winning the next game of Among Us. For this specific data set, the confidence interval is between 48% and 67%. This means that there is a 95% probability that the probability of winning the next game of Among Us is between 48% and 67%. 
 
 ![95% Confidence interval](./images/4.png)
