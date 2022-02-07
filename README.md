@@ -1,3 +1,5 @@
+<h1> Among Us Predictive Modeling Report</h1>
+
 This report uses a data set from Kaggle based on a user's experience from playing the Among Us game. Specifically, this report focuses on the number of times the user wins and losses each game. The language I used to analyze this data is R, which I like because I can use the tidy verse library to organize and visualize my data, and R has lots of built in functions to make sampling and prediction easy. I have used loops, sampling functions, tidy verse functions, and graphs to thoroughly analyze the data and create meaningly conclusions. For example, by the end of this report I will have calculated with a 95% confidence what the probability of winning the next game of Among Us for the user. As well, I will have created a visualization of the distribution of different probabilities to win a game of Among Us based on the data. 
 
 
